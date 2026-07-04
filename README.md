@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🦭 Foca
+# Foca
 
 ### *Remove distractions. Keep what matters.*
 
