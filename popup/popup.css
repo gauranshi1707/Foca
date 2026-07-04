@@ -1,0 +1,812 @@
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+:root {
+  --bg:          #0a0a0a;
+  --card-bg:     #111110;
+  --border:      #242220;
+  --text:        #f5f2eb;
+  --muted:       #9c968a;
+  --accent:      #c5a880;
+  --accent-glow: rgba(197, 168, 128, 0.18);
+  --danger:      #c55353;
+
+  --font-heading: 'Cinzel', serif;
+  --font-body:    'Lora', serif;
+  --font-ui:      'Plus Jakarta Sans', sans-serif;
+
+  --radius:  10px;
+  --ease:    cubic-bezier(0.4, 0, 0.2, 1);
+  --t:       all 0.25s var(--ease);
+}
+
+/* ============================================
+   RESET
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 320px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  overflow-y: auto;
+  animation: fade-in 0.3s var(--ease) both;
+}
+
+body::-webkit-scrollbar { display: none; }
+body { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-3px); }
+}
+
+@keyframes timer-pulse {
+  0%, 100% { text-shadow: 0 0 10px var(--accent-glow); }
+  50%       { text-shadow: 0 0 28px var(--accent-glow), 0 0 50px var(--accent-glow); }
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.container {
+  padding: 18px 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+}
+
+.logo-icon { animation: float 4s ease-in-out infinite; }
+
+.logo-text {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--text);
+}
+
+.tagline {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-style: italic;
+  color: var(--muted);
+  padding-left: 30px;
+}
+
+/* ============================================
+   FOCUS TOGGLE ROW
+   ============================================ */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  transition: var(--t);
+}
+
+.toggle-row:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-glow);
+}
+
+.toggle-label {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: var(--t);
+}
+
+.toggle-label.active {
+  color: var(--accent);
+}
+
+/* Pill Toggle */
+.pill-toggle {
+  display: flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.pill-btn {
+  padding: 5px 16px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--t);
+}
+
+.pill-btn:hover { color: var(--text); }
+
+.pill-btn.active {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+/* ============================================
+   QUICK BREAK
+   ============================================ */
+.break-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  animation: slide-down 0.25s var(--ease) both;
+}
+
+.break-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-ui);
+}
+
+.break-pills {
+  display: flex;
+  gap: 4px;
+}
+
+.break-pill {
+  padding: 3px 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  cursor: pointer;
+  transition: var(--t);
+}
+
+.break-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Active Break Banner */
+.break-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(197, 168, 128, 0.06);
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  animation: slide-down 0.25s var(--ease) both;
+}
+
+.break-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-family: var(--font-ui);
+}
+
+.break-countdown {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+  text-align: center;
+}
+
+.break-end-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  transition: var(--t);
+}
+
+.break-end-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+/* ============================================
+   BASE CARD
+   ============================================ */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  transition: var(--t);
+}
+
+.card:hover {
+  border-color: rgba(197, 168, 128, 0.3);
+}
+
+/* ============================================
+   SESSION SETUP CARD
+   ============================================ */
+.session-setup-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.setup-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.setup-label {
+  font-size: 11px;
+  font-family: var(--font-ui);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.goal-input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  outline: none;
+  transition: var(--t);
+  min-width: 0;
+}
+
+.goal-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.goal-input::placeholder { color: var(--muted); font-style: italic; }
+
+/* Duration control */
+.duration-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dur-btn {
+  width: 26px;
+  height: 26px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--t);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  flex-shrink: 0;
+}
+
+.dur-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.dur-btn:active { transform: scale(0.9); }
+
+.dur-display {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.dur-input {
+  width: 40px;
+  text-align: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 3px 0;
+  outline: none;
+  transition: var(--t);
+  -moz-appearance: textfield;
+}
+
+.dur-input::-webkit-outer-spin-button,
+.dur-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.dur-input:focus { border-color: var(--accent); }
+
+.dur-unit {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-ui);
+}
+
+/* Duration slider */
+.dur-slider {
+  width: 100%;
+  cursor: pointer;
+  accent-color: var(--accent);
+  height: 3px;
+  margin: 2px 0 8px;
+  display: block;
+}
+
+.setup-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 0;
+}
+
+/* Start Button */
+.start-btn {
+  width: 100%;
+  padding: 11px;
+  background: var(--accent);
+  border: none;
+  border-radius: 7px;
+  color: var(--bg);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--t);
+  margin-top: 6px;
+  box-shadow: 0 2px 12px var(--accent-glow);
+}
+
+.start-btn:hover {
+  background: var(--text);
+  box-shadow: 0 4px 18px rgba(245,242,235,0.15);
+}
+
+.start-btn:active { transform: scale(0.98); }
+
+.start-btn.running {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  box-shadow: none;
+  font-size: 12px;
+}
+
+.start-btn.running:hover {
+  background: rgba(197, 83, 83, 0.08);
+}
+
+/* ============================================
+   ACTIVE SESSION CARD
+   ============================================ */
+.active-session-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px 16px;
+  animation: slide-down 0.3s var(--ease) both;
+}
+
+.active-goal-text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+  max-width: 240px;
+}
+
+.timer-display {
+  font-family: var(--font-heading);
+  font-size: 52px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  line-height: 1;
+  transition: var(--t);
+}
+
+.timer-display.ticking {
+  color: var(--accent);
+  animation: timer-pulse 2.5s ease-in-out infinite;
+}
+
+.active-session-actions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.session-cancel-btn {
+  flex: 1;
+  padding: 9px;
+  background: transparent;
+  border: 1px solid var(--danger);
+  border-radius: 7px;
+  color: var(--danger);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--t);
+}
+
+.session-cancel-btn:hover { background: rgba(197,83,83,0.08); }
+
+/* ============================================
+   COLLAPSIBLE CARDS
+   ============================================ */
+.collapsible-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.25s var(--ease);
+}
+
+.collapsible-card:hover { border-color: rgba(197, 168, 128, 0.25); }
+
+.collapsible-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 14px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.collapsible-summary::-webkit-details-marker { display: none; }
+
+.summary-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summary-title {
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.summary-subtext {
+  font-size: 10px;
+  color: var(--muted);
+  font-family: var(--font-ui);
+}
+
+.summary-icon {
+  font-size: 10px;
+  color: var(--accent);
+  transition: transform 0.3s var(--ease);
+}
+
+.collapsible-card[open] .summary-icon { transform: rotate(180deg); }
+
+.collapsible-body {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: slide-down 0.25s var(--ease) both;
+  padding-top: 12px;
+}
+
+/* ============================================
+   FOCUS CONTROLS
+   ============================================ */
+.ctrl-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ctrl-heading {
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.setting-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: var(--t);
+  flex: 1;
+}
+
+.setting-row:hover .setting-label { color: var(--text); }
+
+/* Checkbox */
+.setting-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: var(--t);
+  flex-shrink: 0;
+}
+
+.setting-checkbox:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 6px var(--accent-glow);
+}
+
+.setting-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  width: 4px;
+  height: 7px;
+  border: solid var(--bg);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.setting-checkbox:hover { border-color: var(--accent); }
+
+/* Radio */
+.setting-radio {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: var(--t);
+  flex-shrink: 0;
+}
+
+.setting-radio:checked {
+  border-color: var(--accent);
+  box-shadow: 0 0 6px var(--accent-glow);
+}
+
+.setting-radio:checked::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.setting-radio:hover { border-color: var(--accent); }
+
+/* Sound selector */
+.sound-select {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  outline: none;
+  cursor: pointer;
+}
+
+.preview-btn {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0 8px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  transition: var(--t);
+}
+
+.preview-btn:hover { border-color: var(--accent); }
+
+/* ============================================
+   STATISTICS
+   ============================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid var(--border);
+  padding-left: 10px;
+  transition: var(--t);
+}
+
+.collapsible-card[open]:hover .stat-item { border-left-color: var(--accent); }
+
+.stat-value {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 10px;
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.goal-bar-wrap { width: 100%; }
+
+.goal-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  margin-bottom: 5px;
+}
+
+.goal-bar-track {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.goal-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.6s var(--ease);
+}
+
+.stats-divider { height: 1px; background: var(--border); }
+
+/* Session History */
+.history-details { width: 100%; }
+
+.history-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.history-summary::-webkit-details-marker { display: none; }
+.history-icon { font-size: 9px; color: var(--accent); }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.version-label {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  font-family: var(--font-ui);
+}
+
+/* ============================================
+   SESSION COMPLETE CARD (injected by JS)
+   ============================================ */
+#sessionCompleteCard {
+  animation: slide-down 0.3s var(--ease) both;
+}

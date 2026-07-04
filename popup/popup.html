@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foca - Study Mode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- 1. Header -->
+    <header class="header">
+      <div class="logo-area">
+        <svg class="logo-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 2H18M6 22H18M6 2C6 6 9 9 9 12C9 15 6 18 6 22M18 2C18 6 15 9 15 12C15 15 18 18 18 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 6H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M10 18H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        </svg>
+        <h1 class="logo-text">FOCA</h1>
+      </div>
+      <p class="tagline">Remove distractions. Keep what matters.</p>
+    </header>
+
+    <main class="main-content">
+
+      <!-- 2. Focus Toggle -->
+      <div class="toggle-row">
+        <div class="toggle-left">
+          <span class="toggle-label" id="statusText">Foca is Off</span>
+        </div>
+        <div class="pill-toggle" id="focaModeSelector">
+          <button class="pill-btn active" data-mode="off">Off</button>
+          <button class="pill-btn" data-mode="on">On</button>
+        </div>
+      </div>
+
+      <!-- Quick Break: shown when focus is on -->
+      <div id="quickBreakSection" style="display:none;">
+        <div class="break-row">
+          <span class="break-label">Quick break?</span>
+          <div class="break-pills" id="quickBreakSelector">
+            <button class="break-pill break-btn" data-break="2">2m</button>
+            <button class="break-pill break-btn" data-break="5">5m</button>
+            <button class="break-pill break-btn" data-break="10">10m</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Break Banner -->
+      <div id="activeBreakSection" style="display:none;" class="break-banner">
+        <span class="break-badge">ON BREAK</span>
+        <span id="breakTimeLeft" class="break-countdown">05:00</span>
+        <button id="endBreakBtn" class="break-end-btn">End</button>
+      </div>
+
+      <!-- 3+4+5. Session Setup Card (hidden during active session) -->
+      <div class="card session-setup-card" id="sessionSetupCard">
+        <!-- Goal -->
+        <div class="setup-row">
+          <label class="setup-label" for="sessionGoalInput">Today's Goal</label>
+          <input
+            type="text"
+            id="sessionGoalInput"
+            class="goal-input"
+            placeholder="What are you working on?"
+          >
+        </div>
+
+        <div class="setup-divider"></div>
+
+        <!-- Duration -->
+        <div class="setup-row">
+          <label class="setup-label">Duration</label>
+          <div class="duration-control">
+            <button type="button" id="timerDecrementBtn" class="dur-btn">−</button>
+            <div class="dur-display">
+              <input type="number" id="timerDurationInput" min="1" max="180" value="25" class="dur-input">
+              <span class="dur-unit">min</span>
+            </div>
+            <button type="button" id="timerIncrementBtn" class="dur-btn">+</button>
+          </div>
+        </div>
+        <input type="range" id="timerDurationSlider" min="1" max="180" value="25" class="dur-slider custom-duration-container">
+
+        <div class="setup-divider"></div>
+
+        <!-- Start Button -->
+        <button class="start-btn" id="timerControlBtn">Start Focus Session</button>
+      </div>
+
+      <!-- Active Session Card (shown only during active session) -->
+      <div class="card active-session-card" id="activeSessionCard" style="display:none;">
+        <div id="activeSessionGoal" class="active-goal-text">
+          <span id="activeSessionGoalText">No goal set</span>
+        </div>
+        <div class="timer-display ticking-hidden" id="timerDisplay">25:00</div>
+        <div class="active-session-actions">
+          <button class="session-cancel-btn" id="timerControlBtn2">End Session</button>
+        </div>
+      </div>
+
+      <!-- 6. Focus Controls (collapsible) -->
+      <details class="collapsible-card" id="focusControlsDetails">
+        <summary class="collapsible-summary">
+          <div class="summary-header">
+            <span class="summary-title">⚙ Focus Controls</span>
+            <span class="summary-subtext">Choose what Foca blocks while you study.</span>
+          </div>
+          <span class="summary-icon">▼</span>
+        </summary>
+        <div class="collapsible-body">
+
+          <div class="ctrl-group">
+            <h3 class="ctrl-heading">YouTube</h3>
+            <div class="setting-row">
+              <label class="setting-label" for="ytLockHomepage">Hide Homepage, Shorts &amp; Recommendations</label>
+              <input type="checkbox" id="ytLockHomepage" class="setting-checkbox">
+            </div>
+            <div class="setting-row">
+              <label class="setting-label" for="ytHideComments">Hide Comments on Videos</label>
+              <input type="checkbox" id="ytHideComments" class="setting-checkbox">
+            </div>
+          </div>
+
+          <div class="ctrl-group">
+            <h3 class="ctrl-heading">Instagram</h3>
+            <div class="setting-row">
+              <label class="setting-label" for="igModeOff">No Restrictions</label>
+              <input type="radio" name="igMode" id="igModeOff" value="off" class="setting-radio">
+            </div>
+            <div class="setting-row">
+              <label class="setting-label" for="igModeMessages">Messages Only</label>
+              <input type="radio" name="igMode" id="igModeMessages" value="messages" class="setting-radio">
+            </div>
+            <div class="setting-row">
+              <label class="setting-label" for="igModeBlock">Block Completely</label>
+              <input type="radio" name="igMode" id="igModeBlock" value="block" class="setting-radio">
+            </div>
+          </div>
+
+          <div class="ctrl-group">
+            <h3 class="ctrl-heading">General</h3>
+            <div class="setting-row">
+              <label class="setting-label" for="genEnableTimer">Show Focus Timer</label>
+              <input type="checkbox" id="genEnableTimer" class="setting-checkbox">
+            </div>
+            <div class="setting-row">
+              <label class="setting-label" for="genSoundType">Session End Sound</label>
+              <div style="display:flex;gap:6px;align-items:center;">
+                <select id="genSoundType" class="sound-select">
+                  <option value="chime">Digital Chime</option>
+                  <option value="bowl">Singing Bowl</option>
+                  <option value="soft-bell">Soft Bell</option>
+                  <option value="temple-bell">Temple Bell</option>
+                  <option value="crystal-bell">Crystal Bell</option>
+                  <option value="library-chime">Library Chime</option>
+                  <option value="wind-chime">Wind Chime</option>
+                  <option value="wood-knock">Wooden Knock</option>
+                  <option value="digital-ding">Digital Ding</option>
+                  <option value="calm-piano">Calm Piano</option>
+                  <option value="muted">Muted</option>
+                </select>
+                <button id="previewSoundBtn" class="preview-btn" title="Preview Sound">▶</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <label class="setting-label" for="genShowCards">Show Motivation Quotes</label>
+              <input type="checkbox" id="genShowCards" class="setting-checkbox">
+            </div>
+            <div class="setting-row">
+              <label class="setting-label" for="genAutoEnable">Auto-Enable on Browser Start</label>
+              <input type="checkbox" id="genAutoEnable" class="setting-checkbox">
+            </div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- 7. Statistics (collapsible) -->
+      <details class="collapsible-card" id="statisticsDetails">
+        <summary class="collapsible-summary">
+          <div class="summary-header">
+            <span class="summary-title">📊 Statistics</span>
+            <span class="summary-subtext">View your focus history and progress.</span>
+          </div>
+          <span class="summary-icon">▼</span>
+        </summary>
+        <div class="collapsible-body">
+
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-value" id="statToday">0m</span>
+              <span class="stat-label">Today</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="statWeek">0m</span>
+              <span class="stat-label">This Week</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="statSessions">0</span>
+              <span class="stat-label">Sessions</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="statStreak">0d</span>
+              <span class="stat-label">Streak</span>
+            </div>
+          </div>
+
+          <div class="goal-bar-wrap">
+            <div class="goal-bar-labels">
+              <span>Daily Goal</span>
+              <span id="statDailyGoalLabel">0 / 120 min</span>
+            </div>
+            <div class="goal-bar-track">
+              <div id="statDailyGoalBar" class="goal-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="stats-divider"></div>
+
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-value" id="statLongest">0m</span>
+              <span class="stat-label">Longest</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="statAvg">0m</span>
+              <span class="stat-label">Avg / Session</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="statMonthly">0m</span>
+              <span class="stat-label">This Month</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="statLongestStreak">0d</span>
+              <span class="stat-label">Best Streak</span>
+            </div>
+          </div>
+
+          <details id="sessionHistoryDetails" class="history-details">
+            <summary class="history-summary">
+              <span>Session History</span>
+              <span id="historyToggleIcon" class="history-icon">▼</span>
+            </summary>
+            <div id="sessionHistoryList" style="margin-top:8px;display:flex;flex-direction:column;gap:6px;"></div>
+            <div id="sessionHistoryEmpty" style="display:none;font-size:12px;color:var(--text-muted);font-family:var(--font-ui);text-align:center;padding:10px 0;font-style:italic;">No sessions recorded yet.</div>
+          </details>
+
+        </div>
+      </details>
+
+    </main>
+
+    <footer class="footer">
+      <span class="version-label">Foca v2.0</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
