@@ -2,7 +2,7 @@
 
 # Foca
 
-### *Remove distractions. Keep what matters.*
+### *Study with intention. Browse with purpose.*
 
 A minimalist Chrome extension that helps students stay focused by removing distractions while preserving intentional learning.
 
