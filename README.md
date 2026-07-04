@@ -6,10 +6,6 @@
 
 A minimalist Chrome extension that helps students stay focused by removing distractions while preserving intentional learning.
 
-![Version](https://img.shields.io/badge/version-v1.0-gold)
-![Manifest](https://img.shields.io/badge/Manifest-V3-black)
-![License](https://img.shields.io/badge/License-MIT-green)
-
 </div>
 
 ---
@@ -71,20 +67,6 @@ Ignore everything else.
 - Minimalistic UI
 - Smooth animations
 - Clean typography
-
----
-
-## 📸 Screenshots
-
-> *(Add screenshots here after uploading them.)*
-
-| Home | Focus Session |
-|------|---------------|
-| Screenshot | Screenshot |
-
-| YouTube | Instagram |
-|----------|------------|
-| Screenshot | Screenshot |
 
 ---
 
